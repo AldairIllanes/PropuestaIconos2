@@ -52,7 +52,7 @@
         var markers = [];
 
         function getIcon(fam, state) {
-            const color = state === 'activo' ? (fam === 'A' ? '#1D4ED8' : fam === 'B' ? '#0369A1' : '#15803D') : '#94A3B8';
+            const color = state === 'activo' ? (fam === 'A' ? '#1D4ED8' : fam === 'B' ? '#0369A1' : '#15803D') : '#C62828';
             let svg = "";
             if (fam === 'A') svg = `<svg width="50" height="50" viewBox="0 0 96 96"><rect x="44" y="38" width="8" height="48" fill="#334155"/><rect x="22" y="10" width="52" height="36" rx="4" fill="${color}" stroke="#000" stroke-width="2"/><rect x="30" y="18" width="36" height="18" rx="2" fill="white" opacity="0.9"/></svg>`;
             else if (fam === 'B') svg = `<svg width="50" height="50" viewBox="0 0 96 96"><path d="M12 40 L48 18 L84 40 L84 46 L12 46 Z" fill="${color}" stroke="#000" stroke-width="2"/><text x="48" y="66" text-anchor="middle" font-size="14" font-weight="bold" fill="${color}">BUS</text></svg>`;
