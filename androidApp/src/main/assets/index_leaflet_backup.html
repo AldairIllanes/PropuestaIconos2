@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        body { margin: 0; padding: 0; background: #0f1419; font-family: sans-serif; }
+        #map { position: absolute; top: 90px; bottom: 0; width: 100%; background: #131921; }
+        .controls { position: absolute; top: 0; left: 0; right: 0; height: 90px; background: #1a222c; padding: 8px; display: flex; flex-direction: column; gap: 8px; z-index: 1000; border-bottom: 1px solid #2a3542; }
+        .row { display: flex; gap: 5px; align-items: center; justify-content: space-between; }
+        button { background: #121820; color: white; border: 1px solid #2a3542; padding: 8px 10px; border-radius: 6px; font-size: 11px; flex: 1; }
+        button.active { background: #2563eb; font-weight: bold; border-color: #3b82f6; }
+        .zlabel { color: #9aabbc; font-size: 13px; font-weight: bold; min-width: 70px; }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <div class="row">
+            <button id="btnA" class="active" onclick="setFam('A')">A · Señal</button>
+            <button id="btnB" onclick="setFam('B')">B · Marquesina</button>
+            <button id="btnC" onclick="setFam('C')">C · Punto+P</button>
+        </div>
+        <div class="row">
+            <span class="zlabel" id="zTxt">Zoom 14</span>
+            <div style="display:flex; gap:4px; flex: 2;">
+                <button onclick="map.setZoom(12)">Alejar</button>
+                <button onclick="map.setView([-16.409, -71.5375], 14)">Ciudad</button>
+                <button onclick="map.setZoom(16.5)">Acercar</button>
+            </div>
+        </div>
+    </div>
+    <div id="map"></div>
+    <script>
+        var map = L.map('map', { zoomControl: false }).setView([-16.409, -71.5375], 14);
+
+        // Cargamos las calles (OSM)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19
+        }).addTo(map);
+
+        var stops = [
+            { name: "Plaza de Armas", lat: -16.3988, lng: -71.5368, state: "activo" },
+            { name: "Portal de Flores", lat: -16.4012, lng: -71.5355, state: "activo" },
+            { name: "Yanahuara", lat: -16.4015, lng: -71.5448, state: "activo" },
+            { name: "Av. Ejército", lat: -16.4105, lng: -71.5420, state: "activo" },
+            { name: "Puente Grau", lat: -16.4030, lng: -71.5415, state: "inactivo" }
+        ];
+
+        var currentFam = 'A';
+        var markers = [];
+
+        function getIcon(fam, state) {
+            const color = state === 'activo' ? (fam === 'A' ? '#1D4ED8' : fam === 'B' ? '#0369A1' : '#15803D') : '#94A3B8';
+            let svg = "";
+            if (fam === 'A') svg = `<svg width="50" height="50" viewBox="0 0 96 96"><rect x="44" y="38" width="8" height="48" fill="#334155"/><rect x="22" y="10" width="52" height="36" rx="4" fill="${color}" stroke="#000" stroke-width="2"/><rect x="30" y="18" width="36" height="18" rx="2" fill="white" opacity="0.9"/></svg>`;
+            else if (fam === 'B') svg = `<svg width="50" height="50" viewBox="0 0 96 96"><path d="M12 40 L48 18 L84 40 L84 46 L12 46 Z" fill="${color}" stroke="#000" stroke-width="2"/><text x="48" y="66" text-anchor="middle" font-size="14" font-weight="bold" fill="${color}">BUS</text></svg>`;
+            else svg = `<svg width="50" height="50" viewBox="0 0 96 96"><circle cx="48" cy="42" r="30" fill="${color}"/><text x="48" y="52" text-anchor="middle" font-size="28" font-weight="bold" fill="#fff">P</text></svg>`;
+
+            return L.divIcon({ html: svg, className: '', iconSize: [50, 50], iconAnchor: [25, 50] });
+        }
+
+        function drawStops() {
+            markers.forEach(m => map.removeLayer(m));
+            markers = [];
+            stops.forEach(s => {
+                var m = L.marker([s.lat, s.lng], { icon: getIcon(currentFam, s.state) }).addTo(map);
+                m.on('click', () => alert(s.name + " (" + s.state + ")"));
+                markers.push(m);
+            });
+        }
+
+        function setFam(f) {
+            currentFam = f;
+            document.querySelectorAll('.controls button').forEach(b => b.classList.remove('active'));
+            document.getElementById('btn' + f).classList.add('active');
+            drawStops();
+        }
+
+        map.on('zoomend', () => { document.getElementById('zTxt').innerText = "Zoom " + map.getZoom(); });
+        drawStops();
+    </script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+:root {
+  --bg: #0f1419;
+  --panel: #1a222c;
+  --text: #e8eef4;
+  --muted: #9aabbc;
+  --accent: #2563eb;
+  --line: #2a3542;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.bar { flex: 0 0 auto; }
+
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+  padding: 0.65rem 1rem;
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+  z-index: 2;
+  position: relative;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 11rem;
+}
+
+.brand span {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.controls .label {
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin-right: 0.25rem;
+}
+
+.familias {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.fam, .meta button {
+  appearance: none;
+  border: 1px solid var(--line);
+  background: #121820;
+  color: var(--text);
+  padding: 0.4rem 0.7rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.fam:hover, .meta button:hover { border-color: var(--accent); }
+
+.fam.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.zoom {
+  min-width: 5.5rem;
+  font-variant-numeric: tabular-nums;
+}
+
+#map {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.hint {
+  position: fixed;
+  left: 12px;
+  bottom: 12px;
+  z-index: 2;
+  background: rgba(26, 34, 44, 0.92);
+  border: 1px solid var(--line);
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.72rem;
+  color: var(--muted);
+  max-width: 20rem;
+  pointer-events: none;
+}
+
+.hint p {
+  margin: 0;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.maplibregl-popup-content {
+  background: #1a222c;
+  color: #e8eef4;
+  border-radius: 8px;
+  padding: 0.55rem 0.7rem;
+  font-size: 0.85rem;
+}
+
+.maplibregl-popup-tip { border-top-color: #1a222c !important; }
+
+@media (max-width: 720px) {
+  .meta { margin-left: 0; width: 100%; }
+}

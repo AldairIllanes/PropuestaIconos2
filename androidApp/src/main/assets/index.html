@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GOW-GO-26-002 — Paraderos · Arequipa</title>
+  <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="bar">
+    <div class="brand">
+      <strong>GOW-GO-26-002</strong>
+      <span>Cómo se ven los paraderos al zoom</span>
+    </div>
+    <div class="controls" role="group" aria-label="Familia de íconos">
+      <span class="label">Propuesta</span>
+      <div id="familias" class="familias"></div>
+    </div>
+    <div class="meta">
+      <span class="zoom" id="zoomLabel">Zoom —</span>
+      <button type="button" id="btnZoomOut">Alejado</button>
+      <button type="button" id="btnZoomCity">Ciudad</button>
+      <button type="button" id="btnZoomIn">Cercano</button>
+    </div>
+  </header>
+  <div id="map"></div>
+  <aside class="hint">
+    <p>Cambia A/B/C y usa Alejar / Acercar: ¿se reconoce aún como paradero?</p>
+  </aside>
+  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
